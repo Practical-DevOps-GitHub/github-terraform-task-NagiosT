@@ -1,10 +1,9 @@
-name: Terraform CI
+name: Terraform Plan
 
 on:
   push:
     branches:
       - main
-      - develop
   pull_request:
 
 jobs:
@@ -12,25 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.12.2
 
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
-
       - name: Terraform Plan
         env:
           GITHUB_TOKEN: ${{ secrets.T_key }}
-        run: terraform plan \
-          -var="github_token=$GITHUB_TOKEN" \
-          -var="github_owner=NagiosT" \
-          -var="repository_name=github-terraform-task-NagiosT" \
-          -var="deploy_key_public=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCr0Miua8REXQgG1pGN/Xa3K9q/Qd1IJTIJiuBBLu5hn0mRY+hoRnl3ytqXDcajso5ZNRdmRu9ZOELoQB+WmEfqZmgJEyCJmInAKu8x+1oGRk6jVa5GlzSThjKCbgSVj2k21Pv5DVsgvqZn4cOXuostC79FmYcJGYduC2x7YpFO43OEjmykK33j3nAC84lZ3hH4QcXdKxU7mrdIv/61w7/DzX3TX8Y2joXkQraMNt3tp5cFN9mQjWY5Ui9/YFof/4HJSkoOzINdU1JfM5dBszXvNOrAnrkPO6R6gBUJnhMdpGjvegw2LBoLjR5Zv8yZqwrgoBmC4glAC9OnQBC7jYY2Cw2zcZ/wi5JBRCR6tb2mmUXKeWuOfoIQWHK23sedeLa19f53/ArWPP3jYHPeDt/34WNLOdY7kqq4ZT2O8K+OzJbWfCuZtZG+JyAb/508gIunxV7+jtJPFCZExTZi/ZnO/ryMl/vMZqXUBrByOjUg2nR9dke74NiPRH2DF161Do8Lx2rFVRi2iT4dzDrpQD6glXoeD9iqQ2IBnDDGZ4OWWbUJ8pz7jeziJxTYKP5Plr8tT8/jJnN9Dm2tAcGgoDX5kmAqDRNb0eA1unv1Dqwm2Xq6SCnATDSN4IKVCiq6onAln+m7KnVbaxcbBuHA4sqXhPpDs8GobvouGquO0EWHfQ"
+          DEPLOY_KEY_PUBLIC: ${{ variablies.DEPLOY_KEY_PUBLIC }}
+        run: |
+          terraform plan \
+            -var="github_token=$GITHUB_TOKEN" \
+            -var="github_owner=NagiosT" \
+            -var="repository_name=github-terraform-task-NagiosT" \
+            -var="deploy_key_public=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCr0Miua8REXQgG1pGN/Xa3K9q/Qd1IJTIJiuBBLu5hn0mRY+hoRnl3ytqXDcajso5ZNRdmRu9ZOELoQB+WmEfqZmgJEyCJmInAKu8x+1oGRk6jVa5GlzSThjKCbgSVj2k21Pv5DVsgvqZn4cOXuostC79FmYcJGYduC2x7YpFO43OEjmykK33j3nAC84lZ3hH4QcXdKxU7mrdIv/61w7/DzX3TX8Y2joXkQraMNt3tp5cFN9mQjWY5Ui9/YFof/4HJSkoOzINdU1JfM5dBszXvNOrAnrkPO6R6gBUJnhMdpGjvegw2LBoLjR5Zv8yZqwrgoBmC4glAC9OnQBC7jYY2Cw2zcZ/wi5JBRCR6tb2mmUXKeWuOfoIQWHK23sedeLa19f53/ArWPP3jYHPeDt/34WNLOdY7kqq4ZT2O8K+OzJbWfCuZtZG+JyAb/508gIunxV7+jtJPFCZExTZi/ZnO/ryMl/vMZqXUBrByOjUg2nR9dke74NiPRH2DF161Do8Lx2rFVRi2iT4dzDrpQD6glXoeD9iqQ2IBnDDGZ4OWWbUJ8pz7jeziJxTYKP5Plr8tT8/jJnN9Dm2tAcGgoDX5kmAqDRNb0eA1unv1Dqwm2Xq6SCnATDSN4IKVCiq6onAln+m7KnVbaxcbBuHA4sqXhPpDs8GobvouGquO0EWHfQ"
