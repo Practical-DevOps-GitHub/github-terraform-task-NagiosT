@@ -23,7 +23,7 @@ jobs:
       - name: Terraform Plan
         env:
           GITHUB_TOKEN: ${{ secrets.T_key }}
-          DEPLOY_KEY_PUBLIC: ${{ variables.D_key }}
+          DEPLOY_KEY_PUBLIC: ${{ secrets.D_key }}
         run: |
           terraform plan \
             -var="github_token=$GITHUB_TOKEN" \
