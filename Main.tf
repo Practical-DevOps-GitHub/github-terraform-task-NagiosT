@@ -14,18 +14,18 @@ provider "github" {
 
 variable "github_token" {
   type        = string
-  description = "GitHub Personal Access Token"
+  description = "T_key"
   sensitive   = true
 }
 
 variable "github_owner" {
   type        = string
-  description = "GitHub organization or user owner of the repo"
+  description = "NagiosT"
 }
 
 variable "repository_name" {
   type        = string
-  description = "GitHub repository name"
+  description = "github-terraform-task-NagiosT"
 }
 
 variable "collaborator" {
