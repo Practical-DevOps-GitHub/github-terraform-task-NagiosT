@@ -10,6 +10,10 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
 
+    env:
+      GITHUB_TOKEN: ${{ secrets.T_key }}
+      DEPLOY_KEY_PUBLIC: ${{ secrets.D_key }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,9 +25,6 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        env:
-          GITHUB_TOKEN: ${{ secrets.T_key }}
-          DEPLOY_KEY_PUBLIC: ${{ secrets.D_key }}
         run: |
           terraform plan \
             -var="github_token=$GITHUB_TOKEN" \
